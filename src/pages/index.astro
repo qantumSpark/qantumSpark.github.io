@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const latestArticles = allArticles
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 5);
+---
+
+<BaseLayout title="Accueil">
+  <section class="mb-16">
+    <h1 class="text-3xl font-bold tracking-tight text-base-900">
+      Bienvenue
+    </h1>
+    <p class="mt-4 text-lg text-base-700 leading-relaxed">
+      Cet espace rassemble mes reflexions, essais et projets autour de
+      l'ecriture, de la technologie et de la pensee critique. Un lieu sobre,
+      fait pour lire et explorer.
+    </p>
+  </section>
+
+  <section>
+    <h2 class="text-2xl font-bold tracking-tight text-base-900">
+      Derniers ecrits
+    </h2>
+
+    {latestArticles.length > 0 ? (
+      <div class="mt-8 space-y-8">
+        {latestArticles.map((article) => (
+          <ArticleCard
+            title={article.data.title}
+            description={article.data.description}
+            date={article.data.date}
+            lang={article.data.lang}
+            tags={article.data.tags}
+            slug={article.id}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="mt-4 text-base-700">Aucun article pour le moment.</p>
+    )}
+
+    {latestArticles.length > 0 && (
+      <div class="mt-8">
+        <a
+          href="/ecrits"
+          class="inline-flex items-center gap-1 font-medium text-accent-600 no-underline transition-colors hover:text-accent-700"
+        >
+          Voir tous les ecrits &rarr;
+        </a>
+      </div>
+    )}
+  </section>
+</BaseLayout>

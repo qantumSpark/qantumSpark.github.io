@@ -1,0 +1,41 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  image: string;
+}
+
+const { title, description, url, image } = Astro.props;
+---
+
+<article class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-base-200 transition-shadow hover:shadow-md">
+  <img
+    src={image}
+    alt={title}
+    class="aspect-video w-full object-cover"
+    loading="lazy"
+  />
+
+  <div class="p-5">
+    <h3 class="text-lg font-bold tracking-tight text-base-900">
+      {title}
+    </h3>
+
+    <p class="mt-2 text-sm text-base-700 leading-relaxed">
+      {description}
+    </p>
+
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent-600 no-underline transition-colors hover:text-accent-700"
+    >
+      Voir le projet
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 010-1.06l7.22-7.22H8.75a.75.75 0 010-1.5h5.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0V7.06l-7.22 7.22a.75.75 0 01-1.06 0z" clip-rule="evenodd" />
+      </svg>
+    </a>
+  </div>
+</article>

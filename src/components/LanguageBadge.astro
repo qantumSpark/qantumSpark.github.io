@@ -1,0 +1,21 @@
+---
+interface Props {
+  lang: string;
+}
+
+const { lang } = Astro.props;
+
+const isFr = lang.toLowerCase() === 'fr';
+const label = isFr ? 'FR' : 'EN';
+---
+
+<span
+  class:list={[
+    "inline-block rounded px-2 py-0.5 text-xs font-semibold uppercase",
+    isFr
+      ? "bg-accent-500/15 text-accent-700"
+      : "bg-emerald-500/15 text-emerald-700",
+  ]}
+>
+  {label}
+</span>

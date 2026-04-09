@@ -1,0 +1,47 @@
+---
+const { pathname } = Astro.url;
+
+const navLinks = [
+  { label: "Accueil", href: "/" },
+  { label: "Ecrits", href: "/ecrits" },
+  { label: "Portfolio", href: "/portfolio" },
+  { label: "A propos", href: "/a-propos" },
+];
+
+function isActive(href: string, current: string): boolean {
+  if (href === "/") return current === "/";
+  return current.startsWith(href);
+}
+---
+
+<header class="border-b border-base-200 bg-base-50">
+  <div class="mx-auto flex max-w-2xl flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 py-4">
+    <a href="/" class="text-base font-semibold tracking-tight text-base-900 no-underline hover:text-accent-600">
+      Site personnel
+    </a>
+
+    <nav aria-label="Navigation principale">
+      <ul class="flex flex-wrap items-center gap-x-4 gap-y-1 list-none m-0 p-0 sm:gap-x-6">
+        {navLinks.map(({ label, href }) => {
+          const active = isActive(href, pathname);
+          return (
+            <li>
+              <a
+                href={href}
+                aria-current={active ? "page" : undefined}
+                class:list={[
+                  "text-sm no-underline transition-colors",
+                  active
+                    ? "font-semibold text-accent-600 underline underline-offset-4 decoration-2 decoration-accent-500"
+                    : "text-base-700 hover:text-accent-600",
+                ]}
+              >
+                {label}
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </nav>
+  </div>
+</header>

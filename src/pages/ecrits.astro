@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import TagList from '../components/TagList.astro';
+import { getCollection } from 'astro:content';
+
+const allArticles = await getCollection('articles', ({ data }) => !data.draft);
+const sortedArticles = allArticles
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const allTags = [
+  ...new Set(
+    sortedArticles.flatMap((article) =>
+      article.data.tags.map((tag) => tag.toLowerCase())
+    )
+  ),
+].sort();
+---
+
+<BaseLayout title="Ecrits">
+  <h1 class="text-3xl font-bold tracking-tight text-base-900">
+    Ecrits
+  </h1>
+
+  {allTags.length > 0 && (
+    <div class="mt-6">
+      <TagList tags={allTags} />
+    </div>
+  )}
+
+  {sortedArticles.length > 0 ? (
+    <div class="mt-8 space-y-8">
+      {sortedArticles.map((article) => (
+        <ArticleCard
+          title={article.data.title}
+          description={article.data.description}
+          date={article.data.date}
+          lang={article.data.lang}
+          tags={article.data.tags}
+          slug={article.id}
+        />
+      ))}
+    </div>
+  ) : (
+    <p class="mt-4 text-base-700">Aucun article pour le moment.</p>
+  )}
+</BaseLayout>

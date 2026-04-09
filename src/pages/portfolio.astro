@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const sortedProjects = allProjects
+  .sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
+---
+
+<BaseLayout title="Portfolio">
+  <h1 class="text-3xl font-bold tracking-tight text-base-900">
+    Portfolio
+  </h1>
+
+  {sortedProjects.length > 0 ? (
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {sortedProjects.map((project) => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          url={project.data.url}
+          image={project.data.image}
+        />
+      ))}
+    </div>
+  ) : (
+    <p class="mt-4 text-base-700">Aucun projet pour le moment.</p>
+  )}
+</BaseLayout>
