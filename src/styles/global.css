@@ -1,22 +1,58 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* ===== Design tokens ===== */
+/* ===== Deep Space Observatory — Design Tokens ===== */
 @theme {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-heading: "Exo 2", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "Cascadia Code", "Fira Code", monospace;
 
-  --color-base-50: #fafafa;
-  --color-base-100: #f5f5f5;
-  --color-base-200: #e5e5e5;
-  --color-base-700: #404040;
-  --color-base-800: #262626;
-  --color-base-900: #171717;
+  --color-void: #06060f;
+  --color-void-light: #0c0c1a;
+  --color-void-border: #1a1a2e;
+  --color-void-hover: #12122a;
 
-  --color-accent-500: #6366f1;
-  --color-accent-600: #4f46e5;
-  --color-accent-700: #4338ca;
+  --color-glow-cyan: #00e5ff;
+  --color-glow-cyan-dim: #00b8d4;
+  --color-glow-cyan-ghost: rgba(0, 229, 255, 0.08);
+  --color-glow-cyan-border: rgba(0, 229, 255, 0.2);
+
+  --color-glow-amber: #ffab00;
+  --color-glow-amber-dim: #ff8f00;
+
+  --color-text-primary: #e0e0ec;
+  --color-text-secondary: #8888a0;
+  --color-text-muted: #55556a;
+}
+
+/* ===== Keyframes ===== */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtleGlow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 229, 255, 0.05);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(0, 229, 255, 0.1);
+  }
+}
+
+@keyframes scanLine {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
 }
 
 /* ===== Base styles ===== */
@@ -25,32 +61,140 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  scrollbar-color: var(--color-void-border) var(--color-void);
+}
+
+html::-webkit-scrollbar {
+  width: 6px;
+}
+
+html::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+
+html::-webkit-scrollbar-thumb {
+  background: var(--color-void-border);
+  border-radius: 3px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: var(--color-glow-cyan-border);
 }
 
 body {
-  font-family: var(--font-sans);
-  background-color: var(--color-base-50);
-  color: var(--color-base-800);
+  font-family: var(--font-body);
+  background-color: var(--color-void);
+  color: var(--color-text-primary);
   line-height: 1.7;
   overflow-wrap: break-word;
   word-wrap: break-word;
+  position: relative;
+}
+
+/* Deep space background texture — radial gradient + noise overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background: radial-gradient(
+    ellipse at 50% 30%,
+    var(--color-void-light) 0%,
+    var(--color-void) 70%
+  );
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  pointer-events: none;
 }
 
 /* ===== Link defaults ===== */
 a {
-  color: var(--color-accent-600);
+  color: var(--color-glow-cyan);
   text-decoration: underline;
   text-decoration-thickness: 1px;
-  text-underline-offset: 2px;
-  transition: color 0.15s ease;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
 }
 
 a:hover {
-  color: var(--color-accent-700);
+  color: var(--color-glow-cyan);
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+}
+
+/* ===== Headings ===== */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
 }
 
 /* ===== Responsive images ===== */
 img {
   max-width: 100%;
   height: auto;
+}
+
+/* ===== Prose overrides for dark theme ===== */
+.prose {
+  --tw-prose-body: var(--color-text-primary);
+  --tw-prose-headings: var(--color-text-primary);
+  --tw-prose-lead: var(--color-text-secondary);
+  --tw-prose-links: var(--color-glow-cyan);
+  --tw-prose-bold: var(--color-text-primary);
+  --tw-prose-counters: var(--color-text-muted);
+  --tw-prose-bullets: var(--color-text-muted);
+  --tw-prose-hr: var(--color-void-border);
+  --tw-prose-quotes: var(--color-text-secondary);
+  --tw-prose-quote-borders: var(--color-glow-cyan-border);
+  --tw-prose-captions: var(--color-text-muted);
+  --tw-prose-code: var(--color-glow-cyan-dim);
+  --tw-prose-pre-code: var(--color-text-primary);
+  --tw-prose-pre-bg: var(--color-void-light);
+  --tw-prose-th-borders: var(--color-void-border);
+  --tw-prose-td-borders: var(--color-void-border);
+}
+
+.prose :where(blockquote):not(:where([class~="not-prose"] *)) {
+  border-left-color: var(--color-glow-cyan-border);
+}
+
+.prose :where(a):not(:where([class~="not-prose"] *)) {
+  color: var(--color-glow-cyan);
+  text-decoration-color: var(--color-glow-cyan-border);
+}
+
+.prose :where(a):not(:where([class~="not-prose"] *)):hover {
+  text-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+}
+
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  background-color: var(--color-void-light);
+  border: 1px solid var(--color-void-border);
+  border-radius: 0.5rem;
+}
+
+/* ===== Stagger animation utility ===== */
+.animate-fade-in-up {
+  animation: fadeInUp 0.5s ease-out both;
+}
+
+.animate-subtle-glow {
+  animation: subtleGlow 3s ease-in-out infinite;
+}
+
+/* ===== Selection color ===== */
+::selection {
+  background: rgba(0, 229, 255, 0.2);
+  color: var(--color-text-primary);
 }

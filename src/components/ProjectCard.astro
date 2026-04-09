@@ -4,25 +4,35 @@ interface Props {
   description: string;
   url: string;
   image: string;
+  index?: number;
 }
 
-const { title, description, url, image } = Astro.props;
+const { title, description, url, image, index = 0 } = Astro.props;
+
+const delay = index * 0.1;
 ---
 
-<article class="overflow-hidden rounded-lg bg-white shadow-sm ring-1 ring-base-200 transition-shadow hover:shadow-md">
-  <img
-    src={image}
-    alt={title}
-    class="aspect-video w-full object-cover"
-    loading="lazy"
-  />
+<article
+  class="animate-fade-in-up group overflow-hidden rounded-lg border border-void-border bg-void-light/50 backdrop-blur-sm transition-all duration-300 hover:border-glow-cyan-border hover:shadow-[0_0_20px_rgba(0,229,255,0.05)]"
+  style={`animation-delay: ${delay}s;`}
+>
+  <div class="relative">
+    <img
+      src={image}
+      alt={title}
+      class="aspect-video w-full object-cover"
+      loading="lazy"
+    />
+    <!-- Gradient overlay to blend image into card -->
+    <div class="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-void-light/90"></div>
+  </div>
 
   <div class="p-5">
-    <h3 class="text-lg font-bold tracking-tight text-base-900">
+    <h3 class="text-lg font-semibold tracking-tight text-text-primary" style="font-family: var(--font-heading);">
       {title}
     </h3>
 
-    <p class="mt-2 text-sm text-base-700 leading-relaxed">
+    <p class="mt-2 text-sm text-text-secondary leading-relaxed">
       {description}
     </p>
 
@@ -30,10 +40,11 @@ const { title, description, url, image } = Astro.props;
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-accent-600 no-underline transition-colors hover:text-accent-700"
+      class="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-glow-cyan no-underline transition-all hover:text-glow-cyan"
+      style="font-family: var(--font-mono);"
     >
       Voir le projet
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform group-hover:translate-x-0.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
         <path fill-rule="evenodd" d="M5.22 14.78a.75.75 0 010-1.06l7.22-7.22H8.75a.75.75 0 010-1.5h5.5a.75.75 0 01.75.75v5.5a.75.75 0 01-1.5 0V7.06l-7.22 7.22a.75.75 0 01-1.06 0z" clip-rule="evenodd" />
       </svg>
     </a>

@@ -14,14 +14,23 @@ function isActive(href: string, current: string): boolean {
 }
 ---
 
-<header class="border-b border-base-200 bg-base-50">
-  <div class="mx-auto flex max-w-2xl flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 py-4">
-    <a href="/" class="text-base font-semibold tracking-tight text-base-900 no-underline hover:text-accent-600">
-      Site personnel
+<header class="relative border-b border-glow-cyan-border/50 bg-void-light/60 backdrop-blur-md">
+  <!-- Scan line effect -->
+  <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+    <div class="absolute inset-x-0 h-px bg-glow-cyan/[0.03]" style="animation: scanLine 8s linear infinite;"></div>
+  </div>
+
+  <div class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 py-4">
+    <a
+      href="/"
+      class="font-heading text-lg font-semibold tracking-tight text-glow-cyan no-underline transition-all hover:text-glow-cyan hover:text-shadow-none"
+      style="font-family: var(--font-heading); text-shadow: 0 0 12px rgba(0,229,255,0.2);"
+    >
+      &#9671; OBSERVATORY
     </a>
 
     <nav aria-label="Navigation principale">
-      <ul class="flex flex-wrap items-center gap-x-4 gap-y-1 list-none m-0 p-0 sm:gap-x-6">
+      <ul class="m-0 flex list-none flex-wrap items-center gap-x-4 p-0 sm:gap-x-6">
         {navLinks.map(({ label, href }) => {
           const active = isActive(href, pathname);
           return (
@@ -30,11 +39,12 @@ function isActive(href: string, current: string): boolean {
                 href={href}
                 aria-current={active ? "page" : undefined}
                 class:list={[
-                  "text-sm no-underline transition-colors",
+                  "text-xs uppercase tracking-widest no-underline transition-all",
                   active
-                    ? "font-semibold text-accent-600 underline underline-offset-4 decoration-2 decoration-accent-500"
-                    : "text-base-700 hover:text-accent-600",
+                    ? "text-glow-cyan underline underline-offset-4 decoration-1 decoration-glow-cyan"
+                    : "text-text-secondary hover:text-glow-cyan",
                 ]}
+                style="font-family: var(--font-mono);"
               >
                 {label}
               </a>

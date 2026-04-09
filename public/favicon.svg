@@ -1,4 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <rect width="32" height="32" rx="4" fill="#4F46E5" />
-  <text x="16" y="22" text-anchor="middle" font-size="18" font-family="sans-serif" fill="white">S</text>
+  <!-- Dark background -->
+  <rect width="32" height="32" rx="4" fill="#06060f"/>
+  <!-- Diamond / prism shape -->
+  <path d="M16 4 L28 16 L16 28 L4 16 Z" fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.9"/>
+  <!-- Inner diamond -->
+  <path d="M16 9 L23 16 L16 23 L9 16 Z" fill="none" stroke="#00e5ff" stroke-width="0.8" opacity="0.5"/>
+  <!-- Center dot -->
+  <circle cx="16" cy="16" r="1.5" fill="#00e5ff" opacity="0.8"/>
+  <!-- Subtle glow filter -->
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+  <circle cx="16" cy="16" r="1.5" fill="#00e5ff" opacity="0.3" filter="url(#glow)"/>
 </svg>

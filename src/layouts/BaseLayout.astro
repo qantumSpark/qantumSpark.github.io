@@ -12,17 +12,27 @@ const { title, description } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#06060f" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     {description && <meta name="description" content={description} />}
+
+    <!-- Google Fonts: Exo 2, Outfit, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;600;800&family=JetBrains+Mono:wght@400;500&family=Outfit:wght@300;400;500&display=swap"
+      rel="stylesheet"
+    />
+
     <title>{title}</title>
   </head>
-  <body class="flex min-h-screen flex-col">
+  <body class="flex min-h-screen flex-col bg-void text-text-primary">
     <Header />
-    <main class="mx-auto w-full max-w-2xl flex-1 px-6 py-16">
+    <main class="mx-auto w-full max-w-3xl flex-1 px-6 py-16">
       <slot />
     </main>
     <Footer />

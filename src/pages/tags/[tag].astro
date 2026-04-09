@@ -45,28 +45,29 @@ const allTags = [
 <BaseLayout title={`Tag : ${tag}`}>
   <a
     href="/ecrits"
-    class="inline-flex items-center text-sm text-base-700 no-underline transition-colors hover:text-accent-600"
+    class="inline-flex items-center text-xs uppercase tracking-wider text-text-muted no-underline transition-colors hover:text-glow-cyan"
+    style="font-family: var(--font-mono);"
   >
     &larr; Tous les ecrits
   </a>
 
-  <h1 class="mt-4 text-3xl font-bold tracking-tight text-base-900">
-    Tag : {tag}
+  <h1 class="mt-4 animate-fade-in-up text-4xl font-extrabold tracking-tight" style="font-family: var(--font-heading);">
+    Tag : <span class="text-glow-cyan">{tag}</span>
   </h1>
 
-  <p class="mt-2 text-base-700">
+  <p class="mt-2 text-text-secondary" style="font-family: var(--font-mono); font-size: 0.75rem;">
     {articles.length} {articles.length > 1 ? 'articles' : 'article'}
   </p>
 
   {allTags.length > 0 && (
-    <nav class="mt-6">
+    <nav class="mt-6 animate-fade-in-up" style="animation-delay: 0.1s;">
       <TagList tags={allTags} />
     </nav>
   )}
 
   {articles.length > 0 ? (
-    <div class="mt-8 space-y-8">
-      {articles.map((article) => (
+    <div class="mt-8 space-y-6">
+      {articles.map((article, i) => (
         <ArticleCard
           title={article.data.title}
           description={article.data.description}
@@ -74,10 +75,11 @@ const allTags = [
           lang={article.data.lang}
           tags={article.data.tags}
           slug={article.id}
+          index={i}
         />
       ))}
     </div>
   ) : (
-    <p class="mt-4 text-base-700">Aucun article pour ce tag.</p>
+    <p class="mt-4 text-text-secondary">Aucun article pour ce tag.</p>
   )}
 </BaseLayout>

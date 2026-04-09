@@ -11,9 +11,10 @@ const { tags } = Astro.props;
     {tags.map((tag) => (
       <a
         href={`/tags/${tag.toLowerCase()}`}
-        class="inline-flex items-center rounded-full bg-base-200 px-3 py-1 text-sm text-base-700 no-underline transition-colors hover:bg-base-800 hover:text-base-50"
+        class="inline-flex items-center rounded-sm border border-glow-cyan-border bg-transparent px-2.5 py-1 text-xs uppercase tracking-wider text-text-secondary no-underline transition-all hover:border-glow-cyan/40 hover:bg-glow-cyan-ghost hover:text-glow-cyan-dim"
+        style="font-family: var(--font-mono);"
       >
-        {tag}
+        <span class="mr-1 text-text-muted">#</span>{tag}
       </a>
     ))}
   </div>

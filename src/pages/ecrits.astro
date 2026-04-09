@@ -18,19 +18,22 @@ const allTags = [
 ---
 
 <BaseLayout title="Ecrits">
-  <h1 class="text-3xl font-bold tracking-tight text-base-900">
+  <h1
+    class="animate-fade-in-up text-4xl font-extrabold tracking-tight"
+    style="font-family: var(--font-heading); background: linear-gradient(135deg, #00e5ff 0%, #e0e0ec 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+  >
     Ecrits
   </h1>
 
   {allTags.length > 0 && (
-    <div class="mt-6">
+    <div class="mt-6 animate-fade-in-up" style="animation-delay: 0.1s;">
       <TagList tags={allTags} />
     </div>
   )}
 
   {sortedArticles.length > 0 ? (
-    <div class="mt-8 space-y-8">
-      {sortedArticles.map((article) => (
+    <div class="mt-8 space-y-6">
+      {sortedArticles.map((article, i) => (
         <ArticleCard
           title={article.data.title}
           description={article.data.description}
@@ -38,10 +41,11 @@ const allTags = [
           lang={article.data.lang}
           tags={article.data.tags}
           slug={article.id}
+          index={i}
         />
       ))}
     </div>
   ) : (
-    <p class="mt-4 text-base-700">Aucun article pour le moment.</p>
+    <p class="mt-4 text-text-secondary">Aucun article pour le moment.</p>
   )}
 </BaseLayout>

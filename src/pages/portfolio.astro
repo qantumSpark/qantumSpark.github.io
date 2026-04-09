@@ -9,22 +9,26 @@ const sortedProjects = allProjects
 ---
 
 <BaseLayout title="Portfolio">
-  <h1 class="text-3xl font-bold tracking-tight text-base-900">
+  <h1
+    class="animate-fade-in-up text-4xl font-extrabold tracking-tight"
+    style="font-family: var(--font-heading); background: linear-gradient(135deg, #00e5ff 0%, #e0e0ec 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+  >
     Portfolio
   </h1>
 
   {sortedProjects.length > 0 ? (
-    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-      {sortedProjects.map((project) => (
+    <div class="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
+      {sortedProjects.map((project, i) => (
         <ProjectCard
           title={project.data.title}
           description={project.data.description}
           url={project.data.url}
           image={project.data.image}
+          index={i}
         />
       ))}
     </div>
   ) : (
-    <p class="mt-4 text-base-700">Aucun projet pour le moment.</p>
+    <p class="mt-4 text-text-secondary">Aucun projet pour le moment.</p>
   )}
 </BaseLayout>
