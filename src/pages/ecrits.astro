@@ -15,6 +15,8 @@ const allTags = [
     )
   ),
 ].sort();
+
+const articleCount = sortedArticles.length;
 ---
 
 <BaseLayout title="Ecrits">
@@ -22,14 +24,26 @@ const allTags = [
     class="animate-fade-in-up text-4xl font-extrabold tracking-tight"
     style="font-family: var(--font-heading); background: linear-gradient(135deg, #00e5ff 0%, #e0e0ec 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
   >
-    Ecrits
+    &#9672; Ecrits
   </h1>
+
+  <p
+    class="mt-2 animate-fade-in-up text-text-muted"
+    style="font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; animation-delay: 0.05s;"
+  >
+    [{articleCount} ENTRIES]
+  </p>
 
   {allTags.length > 0 && (
     <div class="mt-6 animate-fade-in-up" style="animation-delay: 0.1s;">
       <TagList tags={allTags} />
     </div>
   )}
+
+  <!-- Separator between tags and articles -->
+  <div class="mt-6 flex items-center gap-4" aria-hidden="true">
+    <div class="h-px flex-1 bg-gradient-to-r from-transparent via-void-border to-transparent"></div>
+  </div>
 
   {sortedArticles.length > 0 ? (
     <div class="mt-8 space-y-6">

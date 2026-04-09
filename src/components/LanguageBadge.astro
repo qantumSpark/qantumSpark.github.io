@@ -11,12 +11,20 @@ const label = isFr ? 'FR' : 'EN';
 
 <span
   class:list={[
-    "inline-block rounded-sm px-2 py-0.5 text-xs font-medium uppercase tracking-wider bg-transparent",
+    "inline-flex items-center gap-1.5 rounded-sm px-2 py-0.5 text-xs font-medium uppercase tracking-wider bg-transparent",
     isFr
-      ? "border border-glow-cyan-border text-glow-cyan-dim"
-      : "border border-glow-amber/30 text-glow-amber-dim",
+      ? "border border-glow-cyan-border/60 text-glow-cyan-dim"
+      : "border border-glow-amber/40 text-glow-amber-dim",
   ]}
   style="font-family: var(--font-mono);"
 >
+  <span
+    class:list={[
+      "inline-block h-1 w-1 rounded-full",
+      isFr ? "bg-glow-cyan-dim" : "bg-glow-amber-dim",
+    ]}
+    style="animation: pulseGlow 3s ease-in-out infinite;"
+    aria-hidden="true"
+  ></span>
   {label}
 </span>

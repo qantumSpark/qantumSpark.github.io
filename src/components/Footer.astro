@@ -2,10 +2,39 @@
 const currentYear = new Date().getFullYear();
 ---
 
-<footer class="border-t border-glow-cyan-border/50 bg-transparent">
+<footer class="relative border-t border-glow-cyan-border/50 bg-transparent">
+  <!-- Decorative top line with geometric markers -->
+  <div class="mx-auto max-w-3xl px-6" aria-hidden="true">
+    <div class="relative flex items-center py-3">
+      <div class="h-px flex-1 bg-gradient-to-r from-transparent via-void-border to-transparent"></div>
+      <span class="mx-3 text-text-muted" style="font-size: 0.45rem; letter-spacing: 0.3em; font-family: var(--font-mono);">
+        &#9671; &#9670; &#9671;
+      </span>
+      <div class="h-px flex-1 bg-gradient-to-r from-transparent via-void-border to-transparent"></div>
+    </div>
+  </div>
+
+  <!-- Subtle grid pattern background -->
+  <div
+    class="pointer-events-none absolute inset-0"
+    style="opacity: 0.015; background-image: linear-gradient(var(--color-void-border) 1px, transparent 1px), linear-gradient(90deg, var(--color-void-border) 1px, transparent 1px); background-size: 40px 40px;"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Transmission end row -->
+  <div class="mx-auto max-w-3xl px-6">
+    <p
+      class="text-center text-text-muted"
+      style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em;"
+    >
+      &gt; TRANSMISSION.END // SIGNAL.CLEAR
+    </p>
+  </div>
+
+  <!-- Info row -->
   <div class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 py-4">
     <p class="text-xs text-text-muted" style="font-family: var(--font-mono);">
-      &gt; SYS.{currentYear} // ALL RIGHTS RESERVED
+      &gt; SYS.{currentYear} // OBSERVATORY
     </p>
     <a
       href="https://github.com"

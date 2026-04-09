@@ -7,39 +7,93 @@ const allArticles = await getCollection('articles', ({ data }) => !data.draft);
 const latestArticles = allArticles
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 5);
+
+const articleCount = allArticles.length;
+
+const lastUpdate = allArticles.length > 0
+  ? allArticles
+      .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())[0]
+      .data.date.toISOString().slice(0, 10).replace(/-/g, '.')
+  : '----.--.--';
 ---
 
 <BaseLayout title="Accueil">
   <!-- Hero section -->
-  <section class="mb-20 animate-fade-in-up">
-    <h1
-      class="text-5xl font-extrabold tracking-tight"
-      style="font-family: var(--font-heading); background: linear-gradient(135deg, #00e5ff 0%, #e0e0ec 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+  <section class="relative mb-20 animate-fade-in-up">
+    <!-- Decorative coordinate numbers (top-right) -->
+    <div
+      class="pointer-events-none absolute -top-4 right-0 text-text-muted"
+      style="font-family: var(--font-mono); font-size: 0.55rem; opacity: 0.25; letter-spacing: 0.1em;"
+      aria-hidden="true"
     >
-      Bienvenue
+      47.3769&deg; N // 8.5417&deg; E
+    </div>
+
+    <!-- Classification label -->
+    <p
+      class="mb-2 text-sm uppercase tracking-[0.25em] text-text-muted"
+      style="font-family: var(--font-mono);"
+    >
+      DEEP SPACE
+    </p>
+
+    <h1
+      class="text-6xl font-extrabold tracking-tight sm:text-7xl"
+      style="font-family: var(--font-heading); background: linear-gradient(135deg, #00e5ff 0%, #e0e0ec 60%, #00b8d4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
+    >
+      Observatory
     </h1>
-    <p class="mt-5 text-lg font-light leading-relaxed text-text-secondary">
+
+    <!-- Decorative dot (bottom-left of title) -->
+    <div class="mt-2 flex items-center gap-2" aria-hidden="true">
+      <span
+        class="inline-block h-1 w-1 rounded-full bg-glow-cyan"
+        style="animation: pulseGlow 2s ease-in-out infinite;"
+      ></span>
+      <span
+        class="text-text-muted"
+        style="font-family: var(--font-mono); font-size: 0.55rem; letter-spacing: 0.2em;"
+      >
+        PERSONAL RESEARCH STATION
+      </span>
+    </div>
+
+    <p class="mt-6 text-lg font-light leading-relaxed text-text-secondary">
       Cet espace rassemble mes reflexions, essais et projets autour de
       l'ecriture, de la technologie et de la pensee critique. Un lieu sobre,
       fait pour lire et explorer.
     </p>
 
-    <!-- Sci-fi separator -->
+    <!-- Sci-fi separator — enhanced with rotating diamond and pulsing lines -->
     <div class="mt-8 flex items-center gap-4" aria-hidden="true">
-      <div class="h-px flex-1 bg-gradient-to-r from-transparent to-glow-cyan-border"></div>
-      <div class="h-2 w-2 rotate-45 border border-glow-cyan-border bg-transparent"></div>
-      <div class="h-px flex-1 bg-gradient-to-l from-transparent to-glow-cyan-border"></div>
+      <div class="h-px flex-1 glow-line"></div>
+      <div
+        class="h-2 w-2 rotate-45 border border-glow-cyan-border bg-transparent"
+        style="animation: slowRotate 12s linear infinite;"
+      ></div>
+      <div class="h-px flex-1 glow-line" style="animation-direction: reverse;"></div>
     </div>
+
+    <!-- Status panel metadata -->
+    <p
+      class="mt-4 text-text-muted"
+      style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em; text-align: center;"
+    >
+      [{articleCount} ENTRIES INDEXED // LAST UPDATE: {lastUpdate}]
+    </p>
   </section>
 
   <!-- Latest writings -->
   <section>
-    <h2
-      class="text-xs uppercase tracking-widest text-text-muted"
-      style="font-family: var(--font-mono);"
-    >
-      // Derniers ecrits
-    </h2>
+    <div class="flex items-center gap-4">
+      <h2
+        class="shrink-0 text-xs uppercase tracking-widest text-text-muted"
+        style="font-family: var(--font-mono);"
+      >
+        // Derniers ecrits
+      </h2>
+      <div class="h-px flex-1 bg-gradient-to-r from-void-border to-transparent" aria-hidden="true"></div>
+    </div>
 
     {latestArticles.length > 0 ? (
       <div class="mt-8 space-y-6">

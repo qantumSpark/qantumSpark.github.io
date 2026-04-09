@@ -21,11 +21,25 @@ const formattedDate = date.toLocaleDateString('fr-FR', {
 ---
 
 <BaseLayout title={title} description={description}>
+  <!-- Reading progress bar -->
+  <div class="reading-progress" id="reading-progress" aria-hidden="true">
+    <div class="reading-progress-bar" id="reading-progress-bar"></div>
+  </div>
+
   <article class="animate-fade-in-up">
-    <header class="mb-10">
+    <!-- Back to all writings link -->
+    <a
+      href="/ecrits"
+      class="inline-flex items-center text-xs uppercase tracking-wider text-text-muted no-underline transition-colors hover:text-glow-cyan"
+      style="font-family: var(--font-mono);"
+    >
+      &larr; Tous les ecrits
+    </a>
+
+    <header class="mb-10 mt-6">
       <h1
-        class="text-3xl font-bold tracking-tight text-text-primary"
-        style="font-family: var(--font-heading);"
+        class="text-4xl font-bold tracking-tight sm:text-5xl"
+        style="font-family: var(--font-heading); background: linear-gradient(135deg, var(--color-text-primary) 0%, var(--color-glow-cyan-dim) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;"
       >
         {title}
       </h1>
@@ -44,14 +58,54 @@ const formattedDate = date.toLocaleDateString('fr-FR', {
         <TagList tags={tags} />
       </div>
 
-      <!-- Separator -->
-      <div class="mt-6 flex items-center gap-4" aria-hidden="true">
+      <!-- Decorative circuit-board style separator -->
+      <div class="mt-6 flex items-center gap-3" aria-hidden="true">
+        <div class="h-px w-8 bg-glow-cyan-border"></div>
+        <div class="h-1 w-1 rounded-full bg-glow-cyan-border"></div>
         <div class="h-px flex-1 bg-gradient-to-r from-glow-cyan-border to-transparent"></div>
+        <div
+          class="h-1 w-1 rounded-full bg-glow-cyan"
+          style="animation: pulseGlow 2s ease-in-out infinite;"
+        ></div>
       </div>
     </header>
 
     <div class="prose max-w-prose">
       <slot />
     </div>
+
+    <!-- End transmission divider -->
+    <div class="mt-16 mb-8" aria-hidden="true">
+      <div class="flex items-center gap-4">
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent to-void-border"></div>
+        <span
+          class="text-text-muted"
+          style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em;"
+        >
+          &#9671; END TRANSMISSION &#9671;
+        </span>
+        <div class="h-px flex-1 bg-gradient-to-l from-transparent to-void-border"></div>
+      </div>
+    </div>
   </article>
+
+  <!-- Reading progress bar script -->
+  <script>
+    function updateProgressBar() {
+      const bar = document.getElementById('reading-progress-bar');
+      if (!bar) return;
+
+      const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      if (docHeight <= 0) {
+        bar.style.width = '0%';
+        return;
+      }
+      const scrolled = (window.scrollY / docHeight) * 100;
+      bar.style.width = Math.min(scrolled, 100) + '%';
+    }
+
+    window.addEventListener('scroll', updateProgressBar, { passive: true });
+    window.addEventListener('resize', updateProgressBar, { passive: true });
+    updateProgressBar();
+  </script>
 </BaseLayout>

@@ -1,21 +1,37 @@
 ---
 interface Props {
   tags: string[];
+  activeTag?: string;
 }
 
-const { tags } = Astro.props;
+const { tags, activeTag } = Astro.props;
 ---
 
 {tags.length > 0 && (
   <div class="inline-flex flex-wrap gap-2">
-    {tags.map((tag) => (
-      <a
-        href={`/tags/${tag.toLowerCase()}`}
-        class="inline-flex items-center rounded-sm border border-glow-cyan-border bg-transparent px-2.5 py-1 text-xs uppercase tracking-wider text-text-secondary no-underline transition-all hover:border-glow-cyan/40 hover:bg-glow-cyan-ghost hover:text-glow-cyan-dim"
-        style="font-family: var(--font-mono);"
-      >
-        <span class="mr-1 text-text-muted">#</span>{tag}
-      </a>
-    ))}
+    {tags.map((tag) => {
+      const normalizedTag = tag.toLowerCase();
+      const isActive = activeTag ? normalizedTag === activeTag.toLowerCase() : false;
+      return (
+        <a
+          href={`/tags/${normalizedTag}`}
+          class:list={[
+            "tag-item inline-flex items-center rounded-sm border px-2.5 py-1 text-xs uppercase tracking-wider no-underline transition-all",
+            isActive
+              ? "border-glow-cyan/50 bg-glow-cyan-ghost text-glow-cyan"
+              : "border-glow-cyan-border bg-transparent text-text-secondary hover:border-glow-cyan/40 hover:bg-glow-cyan-ghost hover:text-glow-cyan-dim hover:shadow-[0_0_10px_rgba(0,229,255,0.1)]",
+          ]}
+          style="font-family: var(--font-mono);"
+        >
+          <span class:list={["mr-1", isActive ? "text-glow-cyan" : "text-text-muted tag-hash"]}>#</span>{tag}
+        </a>
+      );
+    })}
   </div>
 )}
+
+<style>
+  .tag-hash {
+    animation: flicker 5s infinite;
+  }
+</style>

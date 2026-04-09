@@ -24,16 +24,30 @@ const delay = index * 0.08;
 ---
 
 <article
-  class="animate-fade-in-up rounded-lg border border-void-border bg-void-light/50 p-6 backdrop-blur-sm transition-all duration-300 hover:border-glow-cyan-border hover:shadow-[0_0_20px_rgba(0,229,255,0.05)]"
+  class="article-card holo-shimmer animate-fade-in-up relative rounded-lg border border-void-border bg-void-light/50 p-6 backdrop-blur-sm transition-all duration-300 hover:border-glow-cyan-border hover:shadow-[0_0_30px_rgba(0,229,255,0.08)]"
   style={`animation-delay: ${delay}s;`}
 >
+  <!-- Animated left border accent -->
+  <div
+    class="pointer-events-none absolute left-0 top-0 h-full w-0.5 rounded-l-lg"
+    style="background: linear-gradient(180deg, transparent, var(--color-glow-cyan-border), var(--color-glow-cyan), var(--color-glow-cyan-border), transparent); animation: borderGlow 3s ease-in-out infinite;"
+    aria-hidden="true"
+  ></div>
+
+  <!-- Decorative corner element (top-right) -->
+  <div
+    class="pointer-events-none absolute right-2 top-2 text-text-muted"
+    style="font-size: 0.5rem; opacity: 0.3; font-family: var(--font-mono);"
+    aria-hidden="true"
+  >&#9657;</div>
+
   <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
     <time
       datetime={date.toISOString().split('T')[0]}
       class="text-text-muted"
       style="font-family: var(--font-mono); font-size: 0.75rem;"
     >
-      {formattedDate}
+      {formattedDate}<span class="blink-cursor" aria-hidden="true">_</span>
     </time>
     <LanguageBadge lang={lang} />
   </div>
@@ -57,3 +71,20 @@ const delay = index * 0.08;
     </div>
   )}
 </article>
+
+<style>
+  .article-card {
+    transform: translateY(0);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .article-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .blink-cursor {
+    animation: blinkCursor 1s step-end infinite;
+    color: var(--color-glow-cyan);
+    font-weight: 400;
+  }
+</style>

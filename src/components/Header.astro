@@ -15,6 +15,24 @@ function isActive(href: string, current: string): boolean {
 ---
 
 <header class="relative border-b border-glow-cyan-border/50 bg-void-light/60 backdrop-blur-md">
+  <!-- Top utility bar — system status -->
+  <div class="border-b border-void-border/50 bg-void/40">
+    <div class="mx-auto flex max-w-3xl items-center justify-between px-6 py-1">
+      <span
+        class="text-text-muted terminal-text"
+        style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.15em;"
+      >
+        &#9672; DEEP SPACE OBSERVATORY
+      </span>
+      <span
+        class="hidden text-text-muted sm:inline-block"
+        style="font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.1em;"
+      >
+        SYS.ONLINE // SIGNAL.NOMINAL
+      </span>
+    </div>
+  </div>
+
   <!-- Scan line effect -->
   <div class="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
     <div class="absolute inset-x-0 h-px bg-glow-cyan/[0.03]" style="animation: scanLine 8s linear infinite;"></div>
@@ -23,8 +41,8 @@ function isActive(href: string, current: string): boolean {
   <div class="mx-auto flex max-w-3xl flex-wrap items-center justify-between gap-x-8 gap-y-2 px-6 py-4">
     <a
       href="/"
-      class="font-heading text-lg font-semibold tracking-tight text-glow-cyan no-underline transition-all hover:text-glow-cyan hover:text-shadow-none"
-      style="font-family: var(--font-heading); text-shadow: 0 0 12px rgba(0,229,255,0.2);"
+      class="font-heading text-lg font-semibold tracking-tight text-glow-cyan no-underline transition-all hover:text-glow-cyan hover:text-shadow-none animate-pulse-glow-text"
+      style="font-family: var(--font-heading);"
     >
       &#9671; OBSERVATORY
     </a>
@@ -34,18 +52,25 @@ function isActive(href: string, current: string): boolean {
         {navLinks.map(({ label, href }) => {
           const active = isActive(href, pathname);
           return (
-            <li>
+            <li class="relative">
               <a
                 href={href}
                 aria-current={active ? "page" : undefined}
                 class:list={[
-                  "text-xs uppercase tracking-widest no-underline transition-all",
+                  "nav-link relative inline-block text-xs uppercase tracking-widest no-underline transition-all",
                   active
-                    ? "text-glow-cyan underline underline-offset-4 decoration-1 decoration-glow-cyan"
+                    ? "text-glow-cyan"
                     : "text-text-secondary hover:text-glow-cyan",
                 ]}
                 style="font-family: var(--font-mono);"
               >
+                {active && (
+                  <span
+                    class="absolute -left-3 top-1/2 -translate-y-1/2 inline-block h-1.5 w-1.5 rounded-full bg-glow-cyan"
+                    style="animation: pulseGlow 2s ease-in-out infinite;"
+                    aria-hidden="true"
+                  />
+                )}
                 {label}
               </a>
             </li>
@@ -54,4 +79,33 @@ function isActive(href: string, current: string): boolean {
       </ul>
     </nav>
   </div>
+
+  <!-- Animated gradient border below nav -->
+  <div
+    class="h-px"
+    style="background: linear-gradient(90deg, transparent, var(--color-void-border), var(--color-glow-cyan-border), var(--color-void-border), transparent); background-size: 200% 100%; animation: gradientShift 6s ease-in-out infinite;"
+    aria-hidden="true"
+  ></div>
 </header>
+
+<style>
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background: var(--color-glow-cyan);
+    box-shadow: 0 0 6px rgba(0, 229, 255, 0.3);
+    transition: width 0.3s ease;
+  }
+
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  .nav-link[aria-current="page"]::after {
+    width: 100%;
+  }
+</style>

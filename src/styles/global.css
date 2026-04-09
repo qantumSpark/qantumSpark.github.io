@@ -23,6 +23,9 @@
   --color-text-primary: #e0e0ec;
   --color-text-secondary: #8888a0;
   --color-text-muted: #55556a;
+
+  --color-nebula-purple: #0d0b1e;
+  --color-nebula-blue: #080818;
 }
 
 /* ===== Keyframes ===== */
@@ -52,6 +55,137 @@
   }
   100% {
     transform: translateY(100vh);
+  }
+}
+
+@keyframes starFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.4;
+    box-shadow: 0 0 4px rgba(0, 229, 255, 0.2);
+  }
+  50% {
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
+  }
+}
+
+@keyframes pulseGlowText {
+  0%, 100% {
+    text-shadow: 0 0 8px rgba(0, 229, 255, 0.15);
+  }
+  50% {
+    text-shadow: 0 0 16px rgba(0, 229, 255, 0.35);
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    border-color: rgba(0, 229, 255, 0.15);
+  }
+  50% {
+    border-color: rgba(0, 229, 255, 0.4);
+  }
+}
+
+@keyframes flicker {
+  0%, 97%, 100% {
+    opacity: 1;
+  }
+  98% {
+    opacity: 0.7;
+  }
+  99% {
+    opacity: 0.9;
+  }
+}
+
+@keyframes borderPulse {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmerSweep {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+@keyframes glowLineTravel {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes blinkCursor {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slowRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes readingProgress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes scanlineScroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
   }
 }
 
@@ -91,19 +225,84 @@ body {
   position: relative;
 }
 
-/* Deep space background texture — radial gradient + noise overlay */
+/* Deep space background — rich nebula gradient with star field */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: -2;
-  background: radial-gradient(
-    ellipse at 50% 30%,
-    var(--color-void-light) 0%,
-    var(--color-void) 70%
-  );
+  z-index: -3;
+  background:
+    radial-gradient(ellipse at 20% 20%, rgba(13, 11, 30, 0.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 60%, rgba(8, 8, 24, 0.5) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 30%, var(--color-void-light) 0%, var(--color-void) 70%);
 }
 
+/* Star field layer — pure CSS multiple dot layers */
+.star-field {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.star-field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Tiny dim stars */
+  background-image:
+    radial-gradient(1px 1px at 50px 80px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 150px 200px, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1px 1px at 300px 50px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 420px 300px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 550px 150px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 680px 400px, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1px 1px at 100px 500px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 250px 380px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 800px 100px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 900px 280px, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1px 1px at 750px 500px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 1050px 180px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 1200px 400px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 350px 600px, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1px 1px at 600px 550px, rgba(255,255,255,0.2), transparent),
+    /* Medium stars */
+    radial-gradient(1.5px 1.5px at 200px 100px, rgba(200,220,255,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 500px 350px, rgba(200,220,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 750px 250px, rgba(200,220,255,0.45), transparent),
+    radial-gradient(1.5px 1.5px at 1000px 450px, rgba(200,220,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 400px 500px, rgba(200,220,255,0.5), transparent),
+    radial-gradient(1.5px 1.5px at 1100px 120px, rgba(200,220,255,0.4), transparent),
+    /* Bright stars */
+    radial-gradient(2px 2px at 320px 180px, rgba(0,229,255,0.35), transparent),
+    radial-gradient(2px 2px at 700px 80px, rgba(255,255,255,0.55), transparent),
+    radial-gradient(2px 2px at 1050px 350px, rgba(0,229,255,0.3), transparent);
+  background-size: 1300px 650px;
+  animation: starFloat 20s ease-in-out infinite;
+}
+
+.star-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Second layer offset for density */
+  background-image:
+    radial-gradient(1px 1px at 70px 120px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 230px 350px, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1px 1px at 480px 90px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 620px 280px, rgba(255,255,255,0.3), transparent),
+    radial-gradient(1px 1px at 380px 450px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 850px 200px, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1px 1px at 950px 380px, rgba(255,255,255,0.2), transparent),
+    radial-gradient(1px 1px at 1150px 300px, rgba(255,255,255,0.25), transparent),
+    radial-gradient(1.5px 1.5px at 130px 270px, rgba(200,220,255,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 580px 430px, rgba(200,220,255,0.45), transparent),
+    radial-gradient(2px 2px at 900px 100px, rgba(255,255,255,0.5), transparent);
+  background-size: 1300px 650px;
+  animation: starFloat 25s ease-in-out infinite reverse;
+}
+
+/* Noise texture overlay */
 body::after {
   content: "";
   position: fixed;
@@ -113,6 +312,22 @@ body::after {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat: repeat;
   pointer-events: none;
+}
+
+/* Subtle animated scanline overlay */
+.scanline-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 229, 255, 0.008) 2px,
+    rgba(0, 229, 255, 0.008) 4px
+  );
+  animation: scanlineScroll 4s linear infinite;
 }
 
 /* ===== Link defaults ===== */
@@ -161,7 +376,11 @@ img {
 }
 
 .prose :where(blockquote):not(:where([class~="not-prose"] *)) {
-  border-left-color: var(--color-glow-cyan-border);
+  border-left-color: transparent;
+  border-left-width: 3px;
+  position: relative;
+  padding-left: 1.5em;
+  box-shadow: -3px 0 12px rgba(0, 229, 255, 0.15), inset 3px 0 0 var(--color-glow-cyan-dim);
 }
 
 .prose :where(a):not(:where([class~="not-prose"] *)) {
@@ -171,6 +390,57 @@ img {
 
 .prose :where(a):not(:where([class~="not-prose"] *)):hover {
   text-shadow: 0 0 8px rgba(0, 229, 255, 0.3);
+}
+
+.prose :where(h2):not(:where([class~="not-prose"] *)) {
+  position: relative;
+}
+
+.prose :where(h2):not(:where([class~="not-prose"] *))::before {
+  content: "//";
+  font-family: var(--font-mono);
+  font-size: 0.6em;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-right: 0.5em;
+  opacity: 0.6;
+}
+
+.prose :where(hr):not(:where([class~="not-prose"] *)) {
+  border: none;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-void-border) 20%,
+    var(--color-glow-cyan-border) 50%,
+    var(--color-void-border) 80%,
+    transparent 100%
+  );
+  position: relative;
+  overflow: visible;
+}
+
+.prose :where(hr):not(:where([class~="not-prose"] *))::after {
+  content: "\25C7";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 0.5rem;
+  color: var(--color-glow-cyan-border);
+  background: var(--color-void);
+  padding: 0 8px;
+}
+
+.prose :where(code):not(:where(pre *)):not(:where([class~="not-prose"] *)) {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: rgba(0, 229, 255, 0.06);
+  padding: 0.15em 0.4em;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 229, 255, 0.1);
+  box-shadow: 0 0 6px rgba(0, 229, 255, 0.05);
 }
 
 .prose :where(code):not(:where([class~="not-prose"] *)) {
@@ -184,6 +454,79 @@ img {
   border-radius: 0.5rem;
 }
 
+/* ===== Utility Classes ===== */
+
+/* Glow line — animated horizontal line with traveling cyan glow */
+.glow-line {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-void-border) 20%,
+    var(--color-glow-cyan) 50%,
+    var(--color-void-border) 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: glowLineTravel 4s linear infinite;
+}
+
+/* Holographic shimmer — diagonal sweep on hover */
+.holo-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.holo-shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    105deg,
+    transparent 0%,
+    rgba(0, 229, 255, 0.03) 40%,
+    rgba(0, 229, 255, 0.07) 50%,
+    rgba(0, 229, 255, 0.03) 60%,
+    transparent 100%
+  );
+  transform: translateX(-100%) skewX(-15deg);
+  transition: none;
+  pointer-events: none;
+}
+
+.holo-shimmer:hover::after {
+  animation: shimmerSweep 0.6s ease-out;
+}
+
+/* Terminal text — monospace with subtle flicker */
+.terminal-text {
+  font-family: var(--font-mono);
+  animation: flicker 4s infinite;
+}
+
+/* Reading progress bar */
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  z-index: 100;
+  background: transparent;
+  pointer-events: none;
+}
+
+.reading-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--color-glow-cyan), var(--color-glow-cyan-dim));
+  box-shadow: 0 0 8px rgba(0, 229, 255, 0.4);
+  transition: width 0.1s linear;
+}
+
 /* ===== Stagger animation utility ===== */
 .animate-fade-in-up {
   animation: fadeInUp 0.5s ease-out both;
@@ -191,6 +534,14 @@ img {
 
 .animate-subtle-glow {
   animation: subtleGlow 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow-text {
+  animation: pulseGlowText 3s ease-in-out infinite;
+}
+
+.animate-border-glow {
+  animation: borderGlow 3s ease-in-out infinite;
 }
 
 /* ===== Selection color ===== */
